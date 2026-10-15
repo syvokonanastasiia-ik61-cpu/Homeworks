@@ -29,7 +29,6 @@ print("\n Результат f =", "".join(map(str, f1_vec)))
 #fn(fk(y, y, x), x, y)
 print("-" * 35)
 print("Завдання 2")
-print("x | y | z | f7 | f9")
 
 f7_vec = "10110101"
 f9_vec = "10100110"
@@ -41,7 +40,8 @@ def f7(x, y, z):
 def f9(x, y ,z):
     return int(f9_vec[(x << 2) | (y << 1) | z])
 
-
+print("Таблиця функцій f7 і f9:")
+print("x | y | z | f7 | f9")
 for x, y, z in itertools.product([0, 1], repeat=3):
     val1 = f7(x, y, z)
     val2 = f9(x, y, z)
@@ -50,6 +50,7 @@ for x, y, z in itertools.product([0, 1], repeat=3):
 print("-" * 40)
 
 h_values = []
+print("Таблиця функції h(x, y):")
 print("h | x | y | f7 | f9 | y | y | x | x | y")
 for x, y in itertools.product([0, 1], repeat=2):
     num2 = f9(y, y, x)
@@ -125,10 +126,9 @@ is_irref = all(not rel(x, x) for x in array)
 is_sim = all(rel(x, y) == rel(y, x) for x in array for y in array)
 is_antisim = all(
     (
-        not rel(x, y)
-        and rel(y, x)
+        not (rel(x, y) and rel(y, x))
     )
-    or (x == y) for x in array for y in array
+    or x == y for x in array for y in array
 )
 
 is_asim = all(
@@ -155,7 +155,7 @@ print(f"Транзитивне: {is_trans}")
 
 if is_irref and is_asim and is_trans:
     print("Відношення строгого порядку")
-if is_ref and is_antisim and is_trans:
+elif is_ref and is_antisim and is_trans:
     print("Відношення нестрого порядку")
 else:
     print("Відношення не є відношенням порядку")
@@ -165,10 +165,10 @@ print("-" * 35)
 #Найбільший та найменший елементи
 print("Найбільший та найменший елементи")
 
-smallest = next((s for s in array if all(rel(x, s) for x in array)), None)
-largest = next((g for g in array if all(rel(g, x) for x in array)), None)
-minimal = [s for s in array if not any(x != s and rel(s, x) for x in array)]
-maximal = [g for g in array if not any(x != g and rel(x, g) for x in array)]
+smallest = next((g for g in array if all(rel(g, x) for x in array)), None)
+largest = next((s for s in array if all(rel(x, s) for x in array)), None)
+minimal = [g for g in array if not any(x != g and rel(x, g) for x in array)]
+maximal = [s for s in array if not any(x != s and rel(s, x) for x in array)]
 
 print(f"\nНайменший = {smallest if smallest is not None else "Не існує"}")
 print(f"Найбільший = {largest if largest is not None else "Не існує"}")
