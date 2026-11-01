@@ -1,0 +1,178 @@
+import itertools
+
+#Завдання 1
+#f(1110 1100 1111 1001)
+
+print("Завдання 1.1")
+
+f_vec = "1110110011111001"
+def f(x, y, z, w):
+    return int(f_vec[(x<< 3) | (y << 2) | (z<<1) | w])
+
+pdnf = []
+pknf = []
+
+var = ['x', 'y', 'z', 'w']
+
+print("x | y | z | w | f")
+for x, y, z, w in itertools.product([0, 1], repeat=4):
+    val = f(x, y, z, w)
+    print(f"{x} | {y} | {z} | {w} | {val}")
+
+    term = (x, y, z, w)
+    if val==1:
+        pdnf.append(term)
+    else:
+        pknf.append(term)
+
+print("-" * 40)
+
+print("\nДДНФ:", pdnf)
+
+dnf_parts = []
+for t in pdnf:
+    literals = [v if b == 1 else "¬" + v for v, b in zip(var, t)]
+    dnf_parts.append("(" + "·".join(literals) + ")")
+
+dnf = " + ".join(dnf_parts)
+print("\nДДНФ:\n", dnf)
+
+
+knf_parts = []
+for t in pknf:
+    literals = [v if b == 0 else "¬" + v for v, b in zip(var, t)]  # ← навпаки!
+    knf_parts.append("(" + " + ".join(literals) + ")")
+
+knf = " · ".join(knf_parts)
+
+print("\nДКНФ:\n", knf)
+
+
+print("Завдання 3")
+fvec = "01110101"
+gvec = "1100000011101101"
+hvec = "10111111110101111110111001110001"
+
+def f(x, y, z):
+    return int(fvec[(x<< 2) | (y << 1) | z])
+
+def g(x, y, z, w):
+    return int(gvec[(x<< 3) | (y << 2) | (z<<1) | w])
+
+def h(x, y, z, w, v):
+    return int(hvec[(x<< 4) | (y << 3) | (z<<2) | (w<<1) | v])
+
+
+
+pdnf_f = []
+print("x | y | z | f")
+for x, y, z in itertools.product([0, 1], repeat=3):
+    val_f = f(x, y, z)
+    print(f"{x} | {y} | {z} | {val_f}")
+
+    term = (x, y, z)
+    if val_f==1:
+        pdnf_f.append(term)
+
+print("\nДДНФ - f:\n", pdnf_f)
+
+dnf_f_parts = []
+for t in pdnf_f:
+    literals = [v if b == 1 else "¬" + v for v, b in zip(var, t)]
+    dnf_f_parts.append("(" + "·".join(literals) + ")")
+
+dnf_f = " + ".join(dnf_f_parts)
+print("\nДДНФ:\n", dnf_f)
+print("-" * 40)
+
+
+
+pdnf_g = []
+print("x | y | z | w | f")
+for x, y, z, w in itertools.product([0, 1], repeat=4):
+    val_g = g(x, y, z, w)
+    print(f"{x} | {y} | {z} | {w} | {val_g}")
+
+    term = (x, y, z, w)
+    if val_g == 1:
+        pdnf_g.append(term)
+
+print("\nДДНФ - g:\n", pdnf_g)
+
+dnf_g_parts = []
+for t in  pdnf_g:
+    literals = [v if b == 1 else "¬" + v for v, b in zip(var, t)]
+    dnf_g_parts.append("(" + "·".join(literals) + ")")
+
+dnf_g = " + ".join(dnf_g_parts)
+print("\nДДНФ:\n", dnf_g)
+print("-" * 40)
+
+
+pdnf_h = []
+
+print("x | y | z | w | v | f")
+for x, y, z, w, v in itertools.product([0, 1], repeat=5):
+    val_h = h(x, y, z, w, v)
+    print(f"{x} | {y} | {z} | {w} | {v} | {val_h}")
+
+    term = (x, y, z, w, v)
+    if val_h == 1:
+        pdnf_h.append(term)
+
+print("\nДДНФ - h:\n", pdnf_h)
+
+dnf_h_parts = []
+for t in  pdnf_h:
+    literals = [v if b == 1 else "¬" + v for v, b in zip(var, t)]
+    dnf_h_parts.append("(" + "·".join(literals) + ")")
+
+dnf_h = " + ".join(dnf_h_parts)
+print("\nДДНФ:\n", dnf_h)
+print("-" * 40)
+
+
+print("Завдання 4")
+
+task4_set = [0, 2, 4, 6, 8, 10, 12, 14]
+task4_vars = ['x', 'y', 'z', 't']
+
+def f_task4(set, var):
+
+    pdnf_4 = []
+    pknf_4 = []
+    print("x | y | z | t | f")
+
+    for term in itertools.product([0, 1], repeat=4):
+        index = int("".join(map(str, term)), 2)
+        val = 1 if index in set else 0
+        print(f"{'|'.join(map(str, term))} | {val}")
+
+        if val == 1:
+            pdnf_4.append(term)
+        else:
+            pknf_4.append(term)
+
+    print("-" * 40)
+
+    dnf4_parts = []
+    for t in pdnf_4:
+        literals = [v if b == 1 else "¬" + v for v, b in zip(var, t)]
+        dnf4_parts.append("(" + "·".join(literals) + ")")
+
+    dnf4 = " + ".join(dnf4_parts)
+
+    knf4_parts = []
+    for t in pknf_4:
+        literals = [v if b == 0 else "¬" + v for v, b in zip(var, t)]  # ← навпаки!
+        knf4_parts.append("(" + " + ".join(literals) + ")")
+
+    knf4 = " · ".join(knf4_parts)
+
+    return dnf4, knf4
+
+
+dnf4, knf4 = f_task4(task4_set, task4_vars)
+
+print("\nДДНФ:\n", dnf4)
+print("\nДДНФ:\n", knf4)
