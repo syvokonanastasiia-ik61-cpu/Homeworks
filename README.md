@@ -74,7 +74,9 @@
 
 ## Завдання 1
 
-**Умова:** Побудувати таблицю булевої функції f(x, y, z, w) та записати її ДДНФ та ДКНФ.
+**Умова:** 
+![Умова 1]([https://github.com/user-attachments/assets/73d304eb-9bae-4de3-b406-b33228dfec4c](https://github.com/user-attachments/assets/2125777c-aa99-47d2-af78-fb57c3b84f71))
+![Умова 2]([https://github.com/user-attachments/assets/8e40064c-ea53-430d-a24f-285b900945d1](https://github.com/user-attachments/assets/4b744039-11b8-4e11-bd30-932270c647b4))
 
 **Результат:** Вектор значень f = (1110 1100 1111 1001).
 
